@@ -1,6 +1,7 @@
 package br.com.dio.desafio.dominio;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -9,15 +10,32 @@ public class Dev {
     private Set<Conteudo> conteudosConcluidos= new LinkedHashSet<>();
 
     public void inscreverBootcamp(Bootcamp bootcamp){
-
+        this.conteudosInscrito.addAll(bootcamp.getConteudosBootcamp());
+        bootcamp.getDevsInscritos().add(this);
     }
 
     public void progredir(){
+        Optional<Conteudo> conteudo = this.conteudosInscrito.stream().findFirst();
 
+        if(conteudo.isPresent()){
+            this.conteudosConcluidos.add(conteudo.get());
+            this.conteudosInscrito.remove(conteudo.get());
+        } else {
+            System.err.println("Você não está mátriculado em nenhum conteúdo;");
+        }
     }
 
-    public void caucularTotalXp(){
+    public double caucularTotalXp(){
+        return this.conteudosConcluidos.stream().mapToDouble(conteudo -> conteudo.caucularXp()).sum();
 
+
+    }
+    public void gerarCertificado(){
+        if (conteudosInscrito.isEmpty() && !conteudosConcluidos.isEmpty()) {
+            System.out.println("Parabéns, você concluíu o Bootcamp");
+        } else {
+            System.out.println("Volte aqui quando concluir todos os cursos inscrítos");
+        }
     }
 
     public String getNome() {
@@ -32,17 +50,11 @@ public class Dev {
         return conteudosInscrito;
     }
 
-    public void setConteudosInscrito(Set<Conteudo> conteudosInscrito) {
-        this.conteudosInscrito = conteudosInscrito;
-    }
 
     public Set<Conteudo> getConteudosConcluidos() {
         return conteudosConcluidos;
     }
 
-    public void setConteudosConcluidos(Set<Conteudo> conteudosConcluidos) {
-        this.conteudosConcluidos = conteudosConcluidos;
-    }
 
     @Override
     public int hashCode() {

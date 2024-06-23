@@ -29,18 +29,13 @@ public class Bootcamp {
     public LocalDate getDataInicial() {
         return dataInicial;
     }
-    public void setDataInicial(LocalDate dataInicial) {
-        this.dataInicial = dataInicial;
-    }
     public LocalDate getDataFinal() {
         return dataFinal;
     }
     public Set<Dev> getDevsInscritos() {
         return devsInscritos;
     }
-    public void setDevsInscritos(Set<Dev> devsInscritos) {
-        this.devsInscritos = devsInscritos;
-    }
+
     public Set<Conteudo> getConteudosBootcamp() {
         return conteudosBootcamp;
     }
@@ -101,5 +96,7 @@ public class Bootcamp {
         return true;
     }
     
+    }
 
-}
+
+    
